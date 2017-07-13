@@ -1,0 +1,20 @@
+{% extends "webapp/base.html" %}
+
+{% block extrajs %}
+<script src="{{ STATIC_URL }}highcharts/js/highcharts.js"></script>
+<script src="{{ STATIC_URL }}highcharts/js/modules/exporting.js"></script>
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+	<div style="background-color:black;color:white;padding:20px;border-radius:20px;margin-bottom:20px">
+		<h3>Aggregate Donation</h3>
+	</div>
+	<div style="background-color:black;color:white;padding:20px;border-radius:20px;margin-bottom:20px">
+		<h3>Top Charities</h3>
+	</div>
+	<div style="background-color:black;color:white;padding:20px;border-radius:20px;margin-bottom:20px">
+		<h3>Donation Timeline</h3>
+	</div>
+{% endblock %}

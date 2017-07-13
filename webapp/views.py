@@ -8,12 +8,12 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template import Context, loader
 
-import os
-
+def dashboard(request):
+    return render_to_response("webapp/dashboard.html")
 
 def charitiesList(request):
 	charities = ['charity water', 'breast cancer awareness', 'wah'];
 	return render_to_response('webapp/charitieslist.html', {'charities':charities})
 
 def index(request):
-    return HttpResponse("Hi!!!")
+    return HttpResponse("Hello, world. You're at charities.")
