@@ -8,5 +8,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 
-def index(request):
+def charitiesList(request):
     return HttpResponse("Hello, world. You're at charities.")
+
+
+def index(request):
+    return HttpResponse("Hi!!!")
