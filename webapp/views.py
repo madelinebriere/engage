@@ -7,6 +7,11 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
+def dashboard(request):
+    return HttpResponse("DASHBOARD");
+
+def charities_list(request):
+    return HttpResponse("CHARITY");
 
 def index(request):
     return HttpResponse("Hello, world. You're at charities.")
