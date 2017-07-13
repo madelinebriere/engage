@@ -9,8 +9,7 @@ from django.http import HttpResponse
 from django.template import Context, loader
 
 def dashboard(request):
-    template = loader.get_template("webapp/dashboard.html")
-    return HttpResponse(template.render(), {"section.title" : "Dashboard"});
+    return render_to_response("webapp/dashboard.html")
 
 def charitiesList(request):
     return render_to_response('webapp/base.html')
