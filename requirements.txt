@@ -1,0 +1,4 @@
+Django==1.11.3
+django-bootstrap-form==3.2.1
+names==0.3.0
+pytz==2017.2

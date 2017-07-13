@@ -16,4 +16,7 @@ def charitiesList(request):
 	return render_to_response('webapp/charitieslist.html', {'charities':charities})
 
 def index(request):
-    return HttpResponse("Hello, world. You're at charities.")
+	return HttpResponse("Hello, world. You're at charities.")
+
+def new_charity_form(request):
+	return render_to_response('webapp/new_charities_form.html')
