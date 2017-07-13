@@ -12,7 +12,8 @@ import os
 
 
 def charitiesList(request):
-    return render_to_response('webapp/base.html')
+	charities = ['charity water', 'breast cancer awareness', 'wah'];
+	return render_to_response('webapp/charitieslist.html', {'charities':charities})
 
 def index(request):
     return HttpResponse("Hi!!!")

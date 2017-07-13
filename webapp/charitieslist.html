@@ -1,5 +1,37 @@
-<html>
-    <body>
-        Hi {{name}}
-    </body>
-</html>
+{% extends "webapp/base.html" %}
+
+{% block title %}Charities{% endblock %}
+
+{% block content %}
+
+<script type="text/javascript">
+function add_vote() {
+	alert("hello");
+}
+
+function add_charity() {
+
+}
+</script>
+
+ <div class="charities-template">
+ 	<center>
+		<h1>Charities</h1>
+		<p class="lead">Upvote the charity of your choice. <br>Every month, we'll donate to the charity with the most votes. <br>
+		<button onClick="window.location.href='new'">Add New Charity</button>
+		</p>
+	</center>
+
+	<ol class="list-group">
+		{% for charity_item in charities %}
+			<li class="list-group-item">
+				{{ charity_item }}
+				<span class="pull-right">
+			        <button onclick="add_vote()" class="glyphicon glyphicon-chevron-up"></button>
+			        <span class="badge badge-default badge-pill">14</span>
+			    </span>
+			</li>
+		{% endfor %}
+	</ol>
+</div>
+{% endblock %}
