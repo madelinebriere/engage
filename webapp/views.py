@@ -6,12 +6,14 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.http import HttpResponse
+from django.template import Context, loader
 
 def dashboard(request):
-    return HttpResponse("DASHBOARD");
+    template = loader.get_template("webapp/dashboard.html")
+    return HttpResponse(template.render(), {"section.title" : "Dashboard"});
 
-def charities_list(request):
-    return HttpResponse("CHARITY");
+def charitiesList(request):
+    return HttpResponse("Hello, world. You're at charities.")
 
 def index(request):
     return HttpResponse("Hello, world. You're at charities.")
