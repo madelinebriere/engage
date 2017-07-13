@@ -20,5 +20,6 @@ from . import webapp.views
 
 urlpatterns = [
     url(r'^dash/', include('webapp.urls')),
+    url(r'^charities/', include('webapp.urls')),
     url(r'^admin/', admin.site.urls),
 ]
