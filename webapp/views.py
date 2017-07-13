@@ -19,4 +19,8 @@ def index(request):
 	return HttpResponse("Hello, world. You're at charities.")
 
 def new_charity_form(request):
+	if request.method == 'POST': 
+		form = NewCharityForm(request.POST)
+		if form.is_valid():
+			return HttpResponseRedirect('/home/charities')
 	return render_to_response('webapp/new_charities_form.html')

@@ -4,12 +4,23 @@
 
 {% block content %}
 
+{% load crispy_forms_tags %}
+{% crispy example_form example_form.helper %}
+
 <div class="new-charity-template">
   <center>
     <h1>Add your favorite charity!</h1>
   </center>
 
-  <form>
+  <form action="/new-charity/" method="post">
+    <label for="charity_name">Your name: </label>
+    <input id="charity_name" type="text" name="charity_name">
+    <label for="charity_description">Description: </label>
+    <input id="charity_description" type="text" name="charity_description">
+    <input type="submit" value="Submit">
+  </form>
+
+  <!-- <form>
     <div class="form-group">
       <label for="email">Charity Name:</label>
       <input type="email" class="form-control" id="email">
@@ -19,7 +30,7 @@
       <input type="des" class="form-control input-lg" id="des">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+  </form> -->
 </div>
 
 {% endblock %}
