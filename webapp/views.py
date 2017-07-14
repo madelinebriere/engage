@@ -28,19 +28,22 @@ def show_charities(request):
 		description = request.POST.get("charity_description")
 		charity_object = Charity(name = name, description = description, votes = 0)
 		charity_object.save()
-	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all()})
+	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all(), 'votes_left':2})
 
 # New Charity Form Page
 def new_charity(request):
 	return render(request, 'webapp/templates/new_charity.html')
 
 def charity_vote(request):
+	votes_left = 0
 	if request.method == 'POST': 
 		id = request.POST.get("charity_id")
 		charity_object = Charity.objects.get(pk=id)
 		charity_object.votes += 1
 		charity_object.save()
-	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all()})
+		votes_left = int(request.POST.get("votes_left"))
+		votes_left -= 1
+	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all(), 'votes_left':votes_left})
 
 def top_charities(request):
     charities=Charity.objects.all();
@@ -118,4 +121,3 @@ def default_top_charities(request):
 
 def default_sum_donations(request):
     return "47245.81"
-
