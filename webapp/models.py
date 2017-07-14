@@ -14,6 +14,8 @@ class Charity(models.Model):
     name = models.CharField(max_length = 500)
     description = models.CharField(max_length = 1000)
     votes = models.IntegerField(default=0)
+    class Meta:
+        ordering = ('-votes', 'name')
 
 class Donation(models.Model):
     name = models.CharField(max_length = 500)
