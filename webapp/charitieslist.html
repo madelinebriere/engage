@@ -2,15 +2,23 @@
 
 {% block title %}Charities{% endblock %}
 
-{% block content %}
 
-<script type="text/javascript">
+{% block stylesheets %}
 
-function add_vote(charity_object) {
-	charity_object.votes += 1
+<style>
+.right-side {
+ 	display: inline-block;
 }
-</script>
 
+.badge-green {
+	background-color: #1DC746;
+}
+
+</style>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{% endblock %}
+
+{% block content %}
  <div class="charities-template">
  	<center>
 		<h1>Charities</h1>
@@ -22,17 +30,35 @@ function add_vote(charity_object) {
 	<ul class="list-group">
 		{% for charity_object in charities %}
 			<li class="list-group-item">
-				{{ charity_object.name }}
+				<b>{{ charity_object.name }} </b>
+				<button onClick="show_description({{charity_object.id}})" class="glyphicon glyphicon-plus"></button>
 				<span class="pull-right">
-					<span class="badge badge-default badge-pill" style="display: inline-block; background-color: #1DC746;">{{ charity_object.votes }}</span>
-					<form action="/home/charities/vote" method="POST" style="display: inline-block;"">{% csrf_token %}
+					<span class="badge right-side badge-green">{{ charity_object.votes }}</span>
+					<form class="right-side" action="/home/charities/vote" method="POST">{% csrf_token %}
 					    <!-- <input id="submit" type="button" value="Click" /> -->
 					    <input type='hidden' value='{{ charity_object.id }}' type="text" name="charity_id">
 					    <button type="submit" class="glyphicon glyphicon-chevron-up"></button>
 					</form>
 			    </span>
+
+			    <div style='display: none;' id='description'>
+					{{ charity_object.description }}
+				</div>
 			</li>
 		{% endfor %}
 	</ul>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+var id_list = new Array();
+
+function show_description(id) {
+	id_list.push(id);
+	alert("hi" +id);
+	document.getElementById('description').style = "display: block;";
+}
+</script>
+
 {% endblock %}
