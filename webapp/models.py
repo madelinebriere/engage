@@ -20,7 +20,7 @@ class Charity(models.Model):
 class Donation(models.Model):
     name = models.CharField(max_length = 500)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    date = models.DateField(auto_now_add=True, null=True)
+    date = models.DateField(auto_now_add=False, null=True)
     charity = models.ForeignKey(Charity, on_delete=models.CASCADE, blank=True, null=True)
     amount = models.DecimalField(max_digits=13, decimal_places=2, default=0)
 
