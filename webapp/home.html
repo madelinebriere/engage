@@ -1,0 +1,48 @@
+{% extends "webapp/base.html" %}
+
+{% block title %}
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">
+Dashboard
+</h1>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+ .chart-element {
+	background-color:aliceblue;
+	margin:auto;
+	color:darkblue;
+	box-shadow: 0 0 10px #ddd;
+	padding:20px;
+	border-radius:10px;
+	margin-bottom:20px;
+	margin:30px;
+	padding-top: 10px;
+	text-align:center;
+	-webkit-animation: fadein 1s;
+}
+
+.chart-item {
+ 	-webkit-animation: fadein 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">Zuora's Zengage</h1>
+<p class="lead" style="text-align:center;">We seek to make a huge difference with your spare change.</p>
+<h4>Zengage introduces a novel system for charity donation via paychecks. On an opt-in basis, each Zuora paycheck is rounded to the nearest dollar and the change is summed to make a donation (an average of 50 cents per 2 weeks, a dollar per month per person). Try out these new features:
+<ul>
+	<li> Vote on your favorite charity once a month to help decide where your money will go. </li>
+	<li> Visit our dashboard to see how much money has been raised so far.  </li>
+	<li> View your profile to see your individual contribution. </li>
+</ul>
+</h4>
+
+{% endblock %}
+
