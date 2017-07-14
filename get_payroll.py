@@ -1,10 +1,11 @@
 import requests
 import json
+import datetime
 
 from webapp.models import User, Donation
 
 headers = {"Accept": "application/json"}
-hostName = "172.16.33.77"
+hostName = "172.16.33.2"
 port = "8080"
 
 usernames = User.objects.values_list('email', flat=True)
@@ -27,8 +28,11 @@ for username in usernames:
         print(pay)
         print(amount)
 
+        paymentDate = datetime.datetime.strptime(payroll['paymentDate'] , '%Y-%m-%d').date()
+        print(paymentDate)
+
         # create new Donation Object and Save it
-        donation = Donation(user = User.objects.get(email = username), date = payroll['paymentDate'], amount = amount)
+        donation = Donation(user = User.objects.get(email = username), date = paymentDate, amount = amount)
         donation.save()
 
     else:
