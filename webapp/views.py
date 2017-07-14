@@ -47,22 +47,23 @@ def top_charities(request):
     if not charities:
         return default_top_charities(request) 
     else:
-        # #TODO: Test
-        # to_ret = []
-        # data = dict()
-        # for c in charities:
-        #     sum=0
-        #     charity_id=c.name
-        #     donations=Donation.objects.filter(charity=c)
-        #     for d in donations:
-        #         sum=sum+d.amount
-        #     data[charity_id]=sum
-        # #top=sorted(data, key=data.__getitem__, reverse=True)
-        # #top_char=top[1:5]
-        # for k,v in data.items():
-        #     to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
-        # return to_ret
-        return default_top_charities(request)
+        #TODO: Test
+        to_ret = []
+        data = dict()
+        for c in charities:
+            sum=0
+            charity_id=c.name
+            for i in Donation.objects.all():
+                print(i.charity)
+            donations=Donation.objects.filter(charity__name=charity_id)
+            for d in donations:
+                sum=sum+d.amount
+            if sum!=0:
+                data[charity_id]=sum
+        for k,v in data.items():
+            to_ret.append({ 'label'.encode('utf8'): str(k).encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
+        print(to_ret)
+        return to_ret
 
 def monthly_donations(request):
     #TODO: Complete
@@ -87,7 +88,7 @@ def monthly_donations(request):
             for d in donations:
                 sum=sum+d.amount
             month=calendar.month_name[i][:3]
-            to_ret.append({ 'month'.encode('utf8'): (month + ' ' + str(curr_year)).encode('utf8'), 'donation'.encode('utf8'): str(sum).encode('utf8') })
+            to_ret.append({ 'month'.encode('utf8'): (month + ' ' + str(curr_year)).encode('utf8'), 'donation'.encode('utf8'): str(sum).encode('utf8') })    
         return to_ret
 
 def sum_donations(request):
@@ -104,7 +105,6 @@ def sum_donations(request):
 def default_monthly_donations(request):
     data = []
     for i in range(1,12):
-        print(i)
         month=calendar.month_name[i][:3]
         data.append({ 'month'.encode('utf8'): month.encode('utf8'), 'donation'.encode('utf8'): str(1000+150*i).encode('utf8') })
     return data
