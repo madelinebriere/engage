@@ -11,8 +11,12 @@ from django.http import HttpResponse
 from django.template import Context, loader
 from .models import Donation, Charity
 import calendar
+import datetime
 
 import json
+
+def home(request):
+    return render_to_response("webapp/home.html")
 
 def dashboard(request):
     monthly = monthly_donations(request)
@@ -20,37 +24,68 @@ def dashboard(request):
     sum = sum_donations(request)
     return render_to_response("webapp/dashboard.html", {"monthly": monthly, "top": top, "sum": sum})
 
-
 #Individual contributions!
 
 def top_charities(request):
-    #=Charity.objects.all();
-    #if not charities:
+    charities=Charity.objects.all();
+    if not charities:
         return default_top_charities(request) 
-    #else:
+    else:
         #TODO: Test
-        #to_ret = []
-        # data = dict()
-        # for c in charities:
-        #     sum=0
-        #     charity_id=c.name
-        #     donations=Donation.objects.filter(charity=charity_id)
-        #     for d in donations:
-        #         sum=sum+d.amount
-        #     data[charity_id]=sum
-        # top=sorted(dict, key=numbers.__getitem__, reverse=True)
-        # top_char=top[1:5]
-        # for k,v in data.items():
-        #     to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
-        #return to_ret
+        to_ret = []
+        data = dict()
+        for c in charities:
+            sum=0
+            charity_id=c.name
+            donations=Donation.objects.filter(charity=c)
+            for d in donations:
+                sum=sum+d.amount
+            data[charity_id]=sum
+        #top=sorted(data, key=data.__getitem__, reverse=True)
+        #top_char=top[1:5]
+        for k,v in data.items():
+            to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
+        return to_ret
 
 def monthly_donations(request):
     #TODO: Complete
-    return default_monthly_donations(request)
+    donations=Donation.objects.all();
+    if not donations:
+        return default_monthly_donations(request)
+    else:
+        to_ret=[]
+        curr=datetime.datetime.now()
+        curr_month=curr.month#current month
+        curr_year=curr.year#current year
+        months = dict()
+        for i in range(curr_month, 12):
+            sum=0
+            donations=Donation.objects.filter(date__month=i).filter(date__year=(curr_year-1))#check syntax
+            for d in donations:
+                sum=sum+d.amount
+            month=calendar.month_name[i][:3]
+            months[month + ' ' + str(curr_year-1)]= sum#syntax
+        for i in range(1, curr_month):
+            sum=0
+            donations=Donation.objects.filter(date__month=i).filter(date__year=curr_year)#check syntax
+            for d in donations:
+                sum=sum+d.amount
+            month=calendar.month_name[i][:3]
+            months[month + ' ' + str(curr_year)]= sum#syntax
+        for k,v in months.items():
+            to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
+        return to_ret
 
 def sum_donations(request):
     #TODO: Complete
-    return default_sum_donations(request)
+    donations=Donation.objects.all();
+    if not donations:
+        return default_sum_donations(request);
+    else:
+        sum=0
+        for d in donations:
+            sum=sum+d.amount
+        return str(sum)
 
 def default_monthly_donations(request):
     data = []

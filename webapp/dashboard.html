@@ -14,8 +14,9 @@ Dashboard
 	color:darkblue;
 	box-shadow: 0 0 10px #ddd;
 	padding:20px;
-	border-radius:20px;
+	border-radius:10px;
 	margin-bottom:20px;
+	margin:30px;
 	padding-top: 10px;
 	text-align:center;
 	-webkit-animation: fadein 1s;
@@ -35,26 +36,28 @@ Dashboard
 {% endblock %}
 
 {% block content %}
-<h1 style="text-align:center; -webkit-animation: fadein 1s;">Dashboard</h1>
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">Zengage Dashboard</h1>
+<p class="lead" style="text-align:center;">Your monthly donations may seem small, but they add up to a huge contribution. Find out where your money is going!</p>
 <div class="chart-element" style="vertical-align:middle;">
 	<h3>Sum Of All Donations</h3>
 	<div class="chart-item" style="background-color:white;
-	border-radius:20px;
+	border-radius:10px;
 	margin:auto;
 	text-align:center;
 	vertical-align:middle;
 	display:inline-block;
+	box-shadow: 0 0 10px gray;
 	">
 		<h1 style="margin:10px">${{ sum }}</h1>
 	</div>
 </div>
 <div class="chart-element" >
 	<h3>Total Donations By Charity</h3>
-	<div class=chart-item id="topcharities" style="height: 250px;"></div>
+	<div class=chart-item id="topcharities" style="height: 250px;text-align:center;display:inline-block;"></div>
 </div>
 <div class="chart-element">
 	<h3>Total Donations By Month</h3>   
-	<div class=chart-item id="monthly" style="height: 250px;"></div>
+	<div class=chart-item id="monthly" style="height: 250px;text-align:center;display:inline-block;"></div>
 </div>
 {% endblock %}
 
