@@ -1,0 +1,41 @@
+{% extends "webapp/base.html" %}
+
+{% block title %}
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">
+Dashboard
+</h1>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+ .chart-element {
+	background-color:aliceblue;
+	margin:auto;
+	color:darkblue;
+	box-shadow: 0 0 10px #ddd;
+	padding:20px;
+	border-radius:10px;
+	margin-bottom:20px;
+	margin:30px;
+	padding-top: 10px;
+	text-align:center;
+	-webkit-animation: fadein 1s;
+}
+
+.chart-item {
+ 	-webkit-animation: fadein 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">Zengage Dashboard</h1>
+<p class="lead" style="text-align:center;">We seek to make a huge difference with your spare change.</p>
+
+{% endblock %}
+
