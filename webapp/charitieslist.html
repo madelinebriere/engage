@@ -2,35 +2,47 @@
 
 {% block title %}Charities{% endblock %}
 
-{% block content %}
 
-<script type="text/javascript">
+{% block stylesheets %}
 
-function add_vote(charity_object) {
-	charity_object.votes += 1
+<style>
+.right-side {
+ 	display: inline-block;
 }
-</script>
 
+.badge-green {
+	background-color: #1DC746;
+}
+
+</style>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{% endblock %}
+
+{% block content %}
  <div class="charities-template">
  	<center>
 		<h1>Charities</h1>
 		<p class="lead">Upvote the charity of your choice. <br>Every month, we'll donate to the charity with the most votes. <br>
-		<button class="btn" style="background-color: #3487A1; color: #FFFFFF" onClick="window.location.href='/home/charities/new'">Add New Charity</button>
+		<button class="btn" style="background-color: #3487A1; color: #FFFFFF" onClick="window.location.href='/charities/new'">Add New Charity</button>
 		</p>
 	</center>
 
 	<ul class="list-group">
 		{% for charity_object in charities %}
 			<li class="list-group-item">
-				{{ charity_object.name }}
+				<b>{{ charity_object.name }} </b>
 				<span class="pull-right">
-					<span class="badge badge-default badge-pill" style="display: inline-block; background-color: #1DC746;">{{ charity_object.votes }}</span>
-					<form action="/home/charities/vote" method="POST" style="display: inline-block;"">{% csrf_token %}
+					<span class="badge right-side badge-green">{{ charity_object.votes }}</span>
+					<form class="right-side" action="/charities/vote" method="POST">{% csrf_token %}
 					    <!-- <input id="submit" type="button" value="Click" /> -->
 					    <input type='hidden' value='{{ charity_object.id }}' type="text" name="charity_id">
 					    <button type="submit" class="glyphicon glyphicon-chevron-up"></button>
 					</form>
 			    </span>
+
+			    <div style='display: block;' id='description'>
+					{{ charity_object.description }}
+				</div>
 			</li>
 		{% endfor %}
 	</ul>
