@@ -37,13 +37,13 @@ def top_charities(request):
         for c in charities:
             sum=0
             charity_id=c.name
-            donations=Donation.objects.filter(charity=charity_id)
+            donations=Donation.objects.filter(charity=c)
             for d in donations:
                 sum=sum+d.amount
             data[charity_id]=sum
-        top=sorted(data, key=numbers.__getitem__, reverse=True)
-        top_char=top[1:5]
-        for k,v in top_char.items():
+        #top=sorted(data, key=data.__getitem__, reverse=True)
+        #top_char=top[1:5]
+        for k,v in data.items():
             to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
         return to_ret
 
