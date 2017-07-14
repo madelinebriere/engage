@@ -1,10 +1,6 @@
 {% extends "webapp/templates/base_template.html" %}
 
-{% block title %}
-<h1 style="text-align:center; -webkit-animation: fadein 1s;">
-Dashboard
-</h1>
-{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block stylesheets %}
 <style>
@@ -36,10 +32,20 @@ Dashboard
 {% endblock %}
 
 {% block content %}
-<h1 style="text-align:center; -webkit-animation: fadein 1s;">Zengage Dashboard</h1>
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">
+    {% if user == 0 %}
+    Zuora Zengage Dashboard
+    {% else %}
+    Your Zengage Dashboard
+    {% endif %}
+</h1>
 <p class="lead" style="text-align:center;">Your monthly donations may seem small, but they add up to a huge contribution. Find out where your money is going!</p>
 <div class="chart-element" style="vertical-align:middle;">
+    {% if user == 0 %}
 	<h3>Sum Of All Donations</h3>
+    {% else %}
+	<h3>Your Total Donations</h3>
+    {% endif %}
 	<div class="chart-item" style="background-color:white;
 	border-radius:10px;
 	margin:auto;
@@ -52,11 +58,19 @@ Dashboard
 	</div>
 </div>
 <div class="chart-element" >
-	<h3>Total Donations By Charity</h3>
+    {% if user == 0 %}
+	<h3>Sum Of All Donations By Charity</h3>
+    {% else %}
+	<h3>Your Total Donations By Charity</h3>
+    {% endif %}
 	<div class=chart-item id="topcharities" style="height: 250px;text-align:center;display:inline-block;"></div>
 </div>
 <div class="chart-element">
-	<h3>Total Donations By Month</h3>   
+    {% if user == 0 %}
+	<h3>All Total Donations By Month</h3>   
+    {% else %}
+	<h3>Your Total Donations By Month</h3>   
+    {% endif %}
 	<div class=chart-item id="monthly" style="height: 250px;text-align:center;display:inline-block;"></div>
 </div>
 {% endblock %}
