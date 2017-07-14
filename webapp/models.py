@@ -9,6 +9,7 @@ from datetime import date
 class User(models.Model):
     name = models.CharField(max_length = 200)
     email = models.CharField(max_length = 250)
+    votes = models.IntegerField(default=2)
 
 class Charity(models.Model):
     name = models.CharField(max_length = 500)
