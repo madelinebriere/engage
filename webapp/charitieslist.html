@@ -5,12 +5,9 @@
 {% block content %}
 
 <script type="text/javascript">
-function add_vote() {
-	alert("hello");
-}
 
-function add_charity() {
-
+function add_vote(charity_object) {
+	charity_object.votes += 1
 }
 </script>
 
@@ -18,20 +15,24 @@ function add_charity() {
  	<center>
 		<h1>Charities</h1>
 		<p class="lead">Upvote the charity of your choice. <br>Every month, we'll donate to the charity with the most votes. <br>
-		<button onClick="window.location.href='/home/charities/new'">Add New Charity</button>
+		<button class="btn" style="background-color: #3487A1; color: #FFFFFF" onClick="window.location.href='/home/charities/new'">Add New Charity</button>
 		</p>
 	</center>
 
-	<ol class="list-group">
-		{% for charity_item in charities %}
+	<ul class="list-group">
+		{% for charity_object in charities %}
 			<li class="list-group-item">
-				{{ charity_item }}
+				{{ charity_object.name }}
 				<span class="pull-right">
-			        <button onclick="add_vote()" class="glyphicon glyphicon-chevron-up"></button>
-			        <span class="badge badge-default badge-pill">14</span>
+					<span class="badge badge-default badge-pill" style="display: inline-block; background-color: #1DC746;">{{ charity_object.votes }}</span>
+					<form action="/home/charities/vote" method="POST" style="display: inline-block;"">{% csrf_token %}
+					    <!-- <input id="submit" type="button" value="Click" /> -->
+					    <input type='hidden' value='{{ charity_object.id }}' type="text" name="charity_id">
+					    <button type="submit" class="glyphicon glyphicon-chevron-up"></button>
+					</form>
 			    </span>
 			</li>
 		{% endfor %}
-	</ol>
+	</ul>
 </div>
 {% endblock %}

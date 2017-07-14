@@ -4,33 +4,23 @@
 
 {% block content %}
 
-{% load crispy_forms_tags %}
-{% crispy example_form example_form.helper %}
-
 <div class="new-charity-template">
   <center>
     <h1>Add your favorite charity!</h1>
   </center>
 
-  <form action="/new-charity/" method="post">
-    <label for="charity_name">Your name: </label>
-    <input id="charity_name" type="text" name="charity_name">
-    <label for="charity_description">Description: </label>
-    <input id="charity_description" type="text" name="charity_description">
-    <input type="submit" value="Submit">
-  </form>
 
-  <!-- <form>
+  <form action="/home/charities" method="POST">{% csrf_token %}
     <div class="form-group">
-      <label for="email">Charity Name:</label>
-      <input type="email" class="form-control" id="email">
+      <label for="name">Charity Name:</label>
+      <input name="charity_name" type="text" class="form-control">
     </div>
     <div class="form-group">
       <label for="des">Description:</label>
-      <input type="des" class="form-control input-lg" id="des">
+      <input name="charity_description" type="text" class="form-control">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
-  </form> -->
+  </form>
 </div>
 
 {% endblock %}
