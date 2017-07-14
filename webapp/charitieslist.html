@@ -31,7 +31,6 @@
 		{% for charity_object in charities %}
 			<li class="list-group-item">
 				<b>{{ charity_object.name }} </b>
-				<button onClick="show_description({{charity_object.id}})" class="glyphicon glyphicon-plus"></button>
 				<span class="pull-right">
 					<span class="badge right-side badge-green">{{ charity_object.votes }}</span>
 					<form class="right-side" action="/home/charities/vote" method="POST">{% csrf_token %}
@@ -41,24 +40,11 @@
 					</form>
 			    </span>
 
-			    <div style='display: none;' id='description'>
+			    <div style='display: block;' id='description'>
 					{{ charity_object.description }}
 				</div>
 			</li>
 		{% endfor %}
 	</ul>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script type="text/javascript">
-var id_list = new Array();
-
-function show_description(id) {
-	id_list.push(id);
-	alert("hi" +id);
-	document.getElementById('description').style = "display: block;";
-}
-</script>
-
 {% endblock %}
