@@ -4,6 +4,10 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 
+def load_Zuora(apps, schema_editor):
+    User = apps.get_model("User")
+    zuora = User(name = "Corporate", email = 'donations@zuora.com')
+    zuora.save()
 
 class Migration(migrations.Migration):
 
@@ -21,4 +25,5 @@ class Migration(migrations.Migration):
                 ('email', models.CharField(max_length=200)),
             ],
         ),
+        migrations.RunPython(load_Zuora),
     ]
