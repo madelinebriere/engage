@@ -1,0 +1,100 @@
+{% extends "webapp/base.html" %}
+
+{% block title %}
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">
+Dashboard
+</h1>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+ .chart-element {
+	background-color:aliceblue;
+	margin:auto;
+	color:darkblue;
+	box-shadow: 0 0 10px #ddd;
+	padding:20px;
+	border-radius:10px;
+	margin-bottom:20px;
+	margin:30px;
+	padding-top: 10px;
+	text-align:center;
+	-webkit-animation: fadein 1s;
+}
+
+.chart-item {
+ 	-webkit-animation: fadein 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+</style>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{% endblock %}
+
+{% block content %}
+<h1 style="text-align:center; -webkit-animation: fadein 1s;">Zengage Dashboard</h1>
+<p class="lead" style="text-align:center;">Your monthly donations may seem small, but they add up to a huge contribution. Find out where your money is going!</p>
+<div class="chart-element" style="vertical-align:middle;">
+	<h3>Sum Of All Donations</h3>
+	<div class="chart-item" style="background-color:white;
+	border-radius:10px;
+	margin:auto;
+	text-align:center;
+	vertical-align:middle;
+	display:inline-block;
+	box-shadow: 0 0 10px gray;
+	">
+		<h1 style="margin:10px">${{ sum }}</h1>
+	</div>
+</div>
+<div class="chart-element" >
+	<h3>Total Donations By Charity</h3>
+	<div class=chart-item id="topcharities" style="height: 250px;text-align:center;display:inline-block;"></div>
+</div>
+<div class="chart-element">
+	<h3>Total Donations By Month</h3>   
+	<div class=chart-item id="monthly" style="height: 250px;text-align:center;display:inline-block;"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<script>
+new Morris.Bar({
+  // ID of the element in which to draw the chart.
+  element: 'monthly',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  xLabelMargin: 10,
+  {% autoescape off %}
+  data: {{ monthly }},
+  {% endautoescape %}
+  // The name of the data record attribute that contains x-values.
+  xkey: 'month',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['donation'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Donation ($)']
+});
+</script>
+<script>
+new Morris.Donut({
+	element: 'topcharities',
+	{% autoescape off %}
+  	data: {{ top }},
+  	{% endautoescape %}
+  	formatter: function (x, data) { return '$' + x}
+});
+</script>
+<script>
+
+</script>
+{% endblock %}
+

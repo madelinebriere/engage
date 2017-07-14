@@ -11,7 +11,7 @@ import calendar, datetime, json
 ## Pages ##
 
 def profile(request):
-    return
+    return render(request, "webapp/templates/profile.html")
 
 # Home Page
 def index(request):
