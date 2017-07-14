@@ -65,7 +65,6 @@ def top_charities(request):
                 data[charity_id]=sum
         for k,v in data.items():
             to_ret.append({ 'label'.encode('utf8'): str(k).encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
-        print(to_ret)
         return to_ret
 
 def monthly_donations(request):
