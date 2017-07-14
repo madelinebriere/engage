@@ -14,6 +14,14 @@
 	background-color: #1DC746;
 }
 
+.has-upvotes {
+	color: #1DC746;;
+}
+
+.no-upvotes {
+	color: #D3D3D3;
+}
+
 </style>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 {% endblock %}
@@ -22,7 +30,7 @@
  <div class="charities-template">
  	<center>
 		<h1>Charities</h1>
-		<p class="lead">Upvote the charity of your choice. You have {{number}} vote(s). <br>Every month, we'll donate to the charity with the most votes. <br>
+		<p class="lead">Upvote the charity of your choice. You have {{votes_left}} vote(s). <br>Every month, we'll donate to the charity with the most votes. <br>
 		<button class="btn" style="background-color: #3487A1; color: #FFFFFF" onClick="window.location.href='/charities/new'">Add New Charity</button>
 		</p>
 	</center>
@@ -34,12 +42,13 @@
 				<span class="pull-right">
 					<span class="badge right-side badge-green">{{ charity_object.votes }}</span>
 					<form class="right-side" action="/charities/vote" method="POST">{% csrf_token %}
-					    <!-- <input id="submit" type="button" value="Click" /> -->
-					    <input type='hidden' value='{{ charity_object.id }}' type="text" name="charity_id">
-					    {% if number > 0 %}
-					    
+						<input type='hidden' value='{{ charity_object.id }}' type="text" name="charity_id">
+						<input type='hidden' value={{ votes_left }} type="number" name="votes_left">
+					    {% if votes_left > 0 %} 
+					    <button type="submit" class="glyphicon glyphicon-chevron-up has-upvotes"></button>
 					    {% else %}
-					    <button type="submit" class="glyphicon glyphicon-chevron-up"></button>
+					    <button type="button" disabled class="glyphicon glyphicon-chevron-up no-upvotes"></button>
+					    {% endif %}
 					</form>
 			    </span>
 
