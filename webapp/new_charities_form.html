@@ -1,0 +1,26 @@
+{% extends "webapp/base.html" %}
+
+{% block title %}New Charity Form{% endblock %}
+
+{% block content %}
+
+<div class="new-charity-template">
+  <center>
+    <h1>Add your favorite charity!</h1>
+  </center>
+
+
+  <form action="/home/charities" method="POST">{% csrf_token %}
+    <div class="form-group">
+      <label for="name">Charity Name:</label>
+      <input name="charity_name" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="des">Description:</label>
+      <input name="charity_description" type="text" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+{% endblock %}
