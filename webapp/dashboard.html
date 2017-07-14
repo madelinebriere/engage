@@ -71,6 +71,7 @@ new Morris.Bar({
   element: 'monthly',
   // Chart data records -- each entry in this array corresponds to a point on
   // the chart.
+  xLabelMargin: 10,
   {% autoescape off %}
   data: {{ monthly }},
   {% endautoescape %}

@@ -4,7 +4,7 @@ import json
 from webapp.models import User, Donation
 
 headers = {"Accept": "application/json"}
-hostName = "172.16.33.77"
+hostName = "172.16.33.2"
 port = "8080"
 
 usernames = User.objects.values_list('email', flat=True)

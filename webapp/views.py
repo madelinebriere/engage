@@ -15,6 +15,9 @@ import datetime
 
 import json
 
+def profile(request):
+    return
+
 def home(request):
     return render_to_response("webapp/home.html")
 
@@ -31,21 +34,22 @@ def top_charities(request):
     if not charities:
         return default_top_charities(request) 
     else:
-        #TODO: Test
-        to_ret = []
-        data = dict()
-        for c in charities:
-            sum=0
-            charity_id=c.name
-            donations=Donation.objects.filter(charity=c)
-            for d in donations:
-                sum=sum+d.amount
-            data[charity_id]=sum
-        #top=sorted(data, key=data.__getitem__, reverse=True)
-        #top_char=top[1:5]
-        for k,v in data.items():
-            to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
-        return to_ret
+        # #TODO: Test
+        # to_ret = []
+        # data = dict()
+        # for c in charities:
+        #     sum=0
+        #     charity_id=c.name
+        #     donations=Donation.objects.filter(charity=c)
+        #     for d in donations:
+        #         sum=sum+d.amount
+        #     data[charity_id]=sum
+        # #top=sorted(data, key=data.__getitem__, reverse=True)
+        # #top_char=top[1:5]
+        # for k,v in data.items():
+        #     to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
+        # return to_ret
+        return default_top_charities(request)
 
 def monthly_donations(request):
     #TODO: Complete
@@ -57,23 +61,20 @@ def monthly_donations(request):
         curr=datetime.datetime.now()
         curr_month=curr.month#current month
         curr_year=curr.year#current year
-        months = dict()
         for i in range(curr_month, 12):
             sum=0
             donations=Donation.objects.filter(date__month=i).filter(date__year=(curr_year-1))#check syntax
             for d in donations:
                 sum=sum+d.amount
             month=calendar.month_name[i][:3]
-            months[month + ' ' + str(curr_year-1)]= sum#syntax
-        for i in range(1, curr_month):
+            to_ret.append({ 'month'.encode('utf8'): (month + ' ' + str(curr_year-1)).encode('utf8'), 'donation'.encode('utf8'): str(sum).encode('utf8') })
+        for i in range(1, curr_month+1):
             sum=0
             donations=Donation.objects.filter(date__month=i).filter(date__year=curr_year)#check syntax
             for d in donations:
                 sum=sum+d.amount
             month=calendar.month_name[i][:3]
-            months[month + ' ' + str(curr_year)]= sum#syntax
-        for k,v in months.items():
-            to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
+            to_ret.append({ 'month'.encode('utf8'): (month + ' ' + str(curr_year)).encode('utf8'), 'donation'.encode('utf8'): str(sum).encode('utf8') })
         return to_ret
 
 def sum_donations(request):
