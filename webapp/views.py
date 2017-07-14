@@ -10,6 +10,9 @@ import calendar, datetime, json
 
 ## Pages ##
 
+def profile(request):
+    return render(request, "webapp/templates/profile.html")
+
 # Home Page
 def index(request):
     return render(request, "webapp/templates/index.html", {
@@ -25,19 +28,22 @@ def show_charities(request):
 		description = request.POST.get("charity_description")
 		charity_object = Charity(name = name, description = description, votes = 0)
 		charity_object.save()
-	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all()})
+	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all(), 'votes_left':2})
 
 # New Charity Form Page
 def new_charity(request):
 	return render(request, 'webapp/templates/new_charity.html')
 
 def charity_vote(request):
+	votes_left = 0
 	if request.method == 'POST': 
 		id = request.POST.get("charity_id")
 		charity_object = Charity.objects.get(pk=id)
 		charity_object.votes += 1
 		charity_object.save()
-	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all()})
+		votes_left = int(request.POST.get("votes_left"))
+		votes_left -= 1
+	return render(request, 'webapp/templates/charities.html', {'charities':Charity.objects.all(), 'votes_left':votes_left})
 
 def top_charities(request):
     charities=Charity.objects.all();
@@ -50,14 +56,15 @@ def top_charities(request):
         for c in charities:
             sum=0
             charity_id=c.name
-            donations=Donation.objects.filter(charity=c)
+            for i in Donation.objects.all():
+                print(i.charity)
+            donations=Donation.objects.filter(charity__name=charity_id)
             for d in donations:
                 sum=sum+d.amount
-            data[charity_id]=sum
-        #top=sorted(data, key=data.__getitem__, reverse=True)
-        #top_char=top[1:5]
+            if sum!=0:
+                data[charity_id]=sum
         for k,v in data.items():
-            to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
+            to_ret.append({ 'label'.encode('utf8'): str(k).encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
         return to_ret
 
 def monthly_donations(request):
@@ -70,23 +77,20 @@ def monthly_donations(request):
         curr=datetime.datetime.now()
         curr_month=curr.month#current month
         curr_year=curr.year#current year
-        months = dict()
         for i in range(curr_month, 12):
             sum=0
             donations=Donation.objects.filter(date__month=i).filter(date__year=(curr_year-1))#check syntax
             for d in donations:
                 sum=sum+d.amount
             month=calendar.month_name[i][:3]
-            months[month + ' ' + str(curr_year-1)]= sum#syntax
-        for i in range(1, curr_month):
+            to_ret.append({ 'month'.encode('utf8'): (month + ' ' + str(curr_year-1)).encode('utf8'), 'donation'.encode('utf8'): str(sum).encode('utf8') })
+        for i in range(1, curr_month+1):
             sum=0
             donations=Donation.objects.filter(date__month=i).filter(date__year=curr_year)#check syntax
             for d in donations:
                 sum=sum+d.amount
             month=calendar.month_name[i][:3]
-            months[month + ' ' + str(curr_year)]= sum#syntax
-        for k,v in months.items():
-            to_ret.append({ 'label'.encode('utf8'): k.encode('utf8'), 'value'.encode('utf8'): str(v).encode('utf8') })
+            to_ret.append({ 'month'.encode('utf8'): (month + ' ' + str(curr_year)).encode('utf8'), 'donation'.encode('utf8'): str(sum).encode('utf8') })    
         return to_ret
 
 def sum_donations(request):
@@ -103,7 +107,6 @@ def sum_donations(request):
 def default_monthly_donations(request):
     data = []
     for i in range(1,12):
-        print(i)
         month=calendar.month_name[i][:3]
         data.append({ 'month'.encode('utf8'): month.encode('utf8'), 'donation'.encode('utf8'): str(1000+150*i).encode('utf8') })
     return data
@@ -117,4 +120,3 @@ def default_top_charities(request):
 
 def default_sum_donations(request):
     return "47245.81"
-
