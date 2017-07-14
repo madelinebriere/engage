@@ -22,7 +22,7 @@
  <div class="charities-template">
  	<center>
 		<h1>Charities</h1>
-		<p class="lead">Upvote the charity of your choice. <br>Every month, we'll donate to the charity with the most votes. <br>
+		<p class="lead">Upvote the charity of your choice. You have {{number}} vote(s). <br>Every month, we'll donate to the charity with the most votes. <br>
 		<button class="btn" style="background-color: #3487A1; color: #FFFFFF" onClick="window.location.href='/charities/new'">Add New Charity</button>
 		</p>
 	</center>
@@ -36,6 +36,9 @@
 					<form class="right-side" action="/charities/vote" method="POST">{% csrf_token %}
 					    <!-- <input id="submit" type="button" value="Click" /> -->
 					    <input type='hidden' value='{{ charity_object.id }}' type="text" name="charity_id">
+					    {% if number > 0 %}
+					    
+					    {% else %}
 					    <button type="submit" class="glyphicon glyphicon-chevron-up"></button>
 					</form>
 			    </span>
@@ -47,4 +50,16 @@
 		{% endfor %}
 	</ul>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+
+function setColor(val) {
+	if(val > 0) {
+
+	}
+}
+
+</script>
 {% endblock %}

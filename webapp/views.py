@@ -111,7 +111,7 @@ def charitiesList(request):
 		description = request.POST.get("charity_description")
 		charity_object = Charity(name = name, description = description, votes = 0)
 		charity_object.save()
-	return render(request, 'webapp/charitieslist.html', {'charities':Charity.objects.all()})
+	return render(request, 'webapp/charitieslist.html', {'charities':Charity.objects.all(), 'number':1})
 
 def index(request):
 	return HttpResponse("Hello, world. You're at charities.")
